@@ -41,10 +41,9 @@ const useStyles = makeStyles(() => ({
 
 const SlideDeck = (props) => {
   const [fullScreen, setFullScreen] = useState(false);
-  const { slideLocation } = props;
 
-  const markdownText = `
-# Hello!
+  //markdownText used to stub out sample data ideally data will be stored in DB or github repo
+  const markdownText = `# Hello!
 
 ## This should be the first slide
 
@@ -61,36 +60,12 @@ more content
 even more content
 `;
 
+  //take the markdown and break it into discreet slides
   function breakDeck(markdownTxt) {
-    //tried breaking this on /^\r#$/ didn't work. I assume # is a meaningful character to regex?
-    let breakDown = markdownTxt.split("\n#");
-    console.log("Before reassembling slides", breakDown);
+    //markdown text passed in can't start with a newline character or first slide is blank
+    let slides = markdownTxt.split("\n# ");
 
-    let slideArr = [];
-
-    breakDown.forEach((slide, index) => {
-      console.log("in for each slide is", slide);
-      console.log("in for each slideArr is", slideArr);
-      if (slide[0] === " ") {
-        let restOfSlide = breakDown[index + 1]
-          ? breakDown[index + 1][0] === " "
-            ? ""
-            : breakDown[index + 1]
-          : "";
-
-        if (restOfSlide[0] === "#") {
-          restOfSlide = "#" + restOfSlide;
-        }
-
-        let fullSlide = `#${slide + restOfSlide}`;
-
-        slideArr.push(fullSlide);
-      }
-    });
-
-    console.log("after reassembling slides", slideArr);
-
-    return slideArr;
+    return slides.map(slide => "# " + slide);
   }
 
   let contentArray = breakDeck(markdownText);
