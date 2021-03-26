@@ -64,8 +64,8 @@ even more content
   function breakDeck(markdownTxt) {
     //markdown text passed in can't start with a newline character or first slide is blank
     let slides = markdownTxt.split("\n# ");
-
-    return slides.map(slide => "# " + slide);
+    //first slide already has "#" to start
+    return slides.map((slide, index) => !index ? slide : "# " + slide);
   }
 
   let contentArray = breakDeck(markdownText);
