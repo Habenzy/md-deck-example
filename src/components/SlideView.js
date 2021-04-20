@@ -1,6 +1,7 @@
+import { MDXProvider } from '@mdx-js/react';
 import React, { useState } from 'react';
 import {Deck, Slide} from 'spectacle';
-import MarkdownRenderer from './MarkdownRenderer';
+import { mdxComponentMap} from 'spectacle-mdx-loader'
 
 function SlideView(props) {
   const [currIndex, setCurrIndex] = useState(0);
@@ -8,15 +9,15 @@ function SlideView(props) {
   console.log(props.content)
 
   return (
+    <MDXProvider components={mdxComponentMap}>
     <Deck>
 
-      {props.content.map((slide, index) => {
-        return(
-          <Slide key={index}>
-            <MarkdownRenderer text={slide} />
+      {props.content.map((MDXSlide, i) => [MDXSlide])
+        .map(([MDXSlide], i) => (
+          <Slide key={`slide-${i}`} slideNum={i}>
+            <MDXSlide />
           </Slide>
-        )
-      })}
+        ))}
       
 
       {/* {props.content[currIndex - 1] && (
@@ -41,6 +42,7 @@ function SlideView(props) {
         </button>
       )} */}
     </Deck>
+    </MDXProvider>
   );
 }
 

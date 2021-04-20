@@ -41,13 +41,13 @@ const useStyles = makeStyles(() => ({
 
 const SlideDeck = (props) => {
   const [fullScreen, setFullScreen] = useState(false);
-  const [content, setContent] = useState([])
+  const [content, setContent] = useState('')
 
   useEffect(() => {
     if(!content.length) {
       fetch('https://habenzy.github.io/md-sample-deck/test-one.md').then(res => res.text())
       .then(mdTxt => {
-        breakDeck(mdTxt)
+        setContent(mdTxt)
       })
     }
   })
