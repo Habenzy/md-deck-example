@@ -15,8 +15,7 @@ const MarkdownRenderer = (props) => {
   const components = {
     pre: props => <div {...props} />,
     code: props => <Code {...props} />,
-    h1: props => <Heading {...props} />,
-    //Not worrying about other styles yet
+    h1: props => <Typography variant="h1" {...props} gutterBottom />,
     h2: props => <Typography variant="h2" {...props} gutterBottom />,
     h3: props => <Typography variant="h3" {...props} gutterBottom />,
     h4: props => <Typography variant="h4" {...props} gutterBottom />,
