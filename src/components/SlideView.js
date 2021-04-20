@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Deck, Slide} from 'spectacle';
 import MarkdownRenderer from './MarkdownRenderer';
 
 function SlideView(props) {
@@ -7,11 +8,18 @@ function SlideView(props) {
   console.log(props.content)
 
   return (
-    <div>
-      
-      <MarkdownRenderer text={props.content[currIndex]} />
+    <Deck>
 
-      {props.content[currIndex - 1] && (
+      {props.content.map((slide, index) => {
+        return(
+          <Slide key={index}>
+            <MarkdownRenderer text={slide} />
+          </Slide>
+        )
+      })}
+      
+
+      {/* {props.content[currIndex - 1] && (
         <button
           id="prev-button"
           onClick={() => {
@@ -31,8 +39,8 @@ function SlideView(props) {
         >
           Next
         </button>
-      )}
-    </div>
+      )} */}
+    </Deck>
   );
 }
 

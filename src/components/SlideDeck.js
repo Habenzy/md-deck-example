@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Button from "@material-ui/core/Button";
@@ -41,34 +41,30 @@ const useStyles = makeStyles(() => ({
 
 const SlideDeck = (props) => {
   const [fullScreen, setFullScreen] = useState(false);
+  const [content, setContent] = useState([])
+
+  useEffect(() => {
+    if(!content.length) {
+      fetch('https://habenzy.github.io/md-sample-deck/test-one.md').then(res => res.text())
+      .then(mdTxt => {
+        breakDeck(mdTxt)
+      })
+    }
+  })
 
   //markdownText used to stub out sample data ideally data will be stored in DB or github repo
-  const markdownText = `# Hello!
-
-## This should be the first slide
-
-some content
-
-# This is another title
-
-## And this is on the second slide
-
-more content
-
-# Here's a third slide!
-
-even more content
-`;
 
   //take the markdown and break it into discreet slides
   function breakDeck(markdownTxt) {
     //markdown text passed in can't start with a newline character or first slide is blank
     let slides = markdownTxt.split("\n# ");
     //first slide already has "#" to start
-    return slides.map((slide, index) => !index ? slide : "# " + slide);
+    let slideArr = slides.map((slide, index) => !index ? slide : "# " + slide);
+
+    setContent(slideArr)
   }
 
-  let contentArray = breakDeck(markdownText);
+  // let contentArray = breakDeck(markdownText);
 
   const classes = useStyles();
   return (
@@ -84,7 +80,7 @@ even more content
         title="Lesson Slides"
         className={clsx(classes.slides, fullScreen && classes.fullScreen)}
       >
-        <SlideView content={contentArray} />
+        <SlideView content={content} />
       </div>
       <Button
         className={classes.enterFullscreenBtn}
