@@ -41,40 +41,21 @@ const useStyles = makeStyles(() => ({
 
 const SlideDeck = (props) => {
   const [fullScreen, setFullScreen] = useState(false);
-  const [content, setContent] = useState('')
+  const [content, setContent] = useState("");
 
   useEffect(() => {
-    if(!content.length) {
-      fetch('https://habenzy.github.io/md-sample-deck/test-one.md').then(res => res.text())
-      .then(mdTxt => {
-        setContent(mdTxt)
-      })
+    if (!content.length) {
+      fetch("https://habenzy.github.io/md-sample-deck/test-one.md")
+        .then((res) => res.text())
+        .then((mdTxt) => {
+          setContent(mdTxt);
+        });
     }
-  })
-
-  //markdownText used to stub out sample data ideally data will be stored in DB or github repo
-
-  //take the markdown and break it into discreet slides
-  function breakDeck(markdownTxt) {
-    //markdown text passed in can't start with a newline character or first slide is blank
-    let slides = markdownTxt.split("\n# ");
-    //first slide already has "#" to start
-    let slideArr = slides.map((slide, index) => !index ? slide : "# " + slide);
-
-    setContent(slideArr)
-  }
-
-  // let contentArray = breakDeck(markdownText);
+  });
 
   const classes = useStyles();
   return (
     <div>
-      {/* Replace iFrame with custom slide deck component
-          write slides in markdown for tansferability
-          build array of content breaking on H1s and cycle through content by clicking buttons
-          Check with Josh about these ideas...
-          creat div to hold MarkdownRenderer, prev and next buttons
-      */}
       <div
         id="slides"
         title="Lesson Slides"
