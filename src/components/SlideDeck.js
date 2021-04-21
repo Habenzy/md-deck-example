@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { Deck, MarkdownSlideSet } from "spectacle";
 import clsx from "clsx";
 import Button from "@material-ui/core/Button";
-import SlideView from "./SlideView";
 
 const useStyles = makeStyles(() => ({
   slides: {
@@ -56,37 +56,13 @@ const SlideDeck = (props) => {
   const classes = useStyles();
   return (
     <div>
-      <div
-        id="slides"
-        title="Lesson Slides"
-        className={clsx(classes.slides, fullScreen && classes.fullScreen)}
-      >
-        <SlideView content={content} />
-      </div>
-      <Button
-        className={classes.enterFullscreenBtn}
-        type="button"
-        size="small"
-        variant="outlined"
-        onClick={() => {
-          setFullScreen(true);
-        }}
-      >
-        See Full Screen Slides
-      </Button>
-      {fullScreen && (
-        <Button
-          className={classes.exitFullscreenBtn}
-          type="button"
-          size="small"
-          variant="outlined"
-          onClick={() => {
-            setFullScreen(false);
-          }}
-        >
-          Exit Full Screen Slides
-        </Button>
-      )}
+     {content ? (
+    <Deck>
+      <MarkdownSlideSet>{content}</MarkdownSlideSet>
+    </Deck>
+  ) : (
+    <p>Loading...</p>
+  )}
     </div>
   );
 };
